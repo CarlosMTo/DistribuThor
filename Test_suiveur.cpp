@@ -12,7 +12,7 @@
 // Global Functions
 int iSuiveur();
 
-#define iAnalog_input_suiveur 1
+#define iAnalog_input_suiveur 8
 
 int main()
 {
@@ -80,7 +80,7 @@ int iSuiveur(){
 	
 	// lecture port analogique
 	int iValSuiveur;
-	iValSuiveur = ANALOG_Read(1);
+	iValSuiveur = ANALOG_Read(iAnalog_input_suiveur);
 	
 	// sortie
 	int iResSuiveur = 0;
