@@ -188,6 +188,8 @@ int color_Init(int& dev_handle)
 	return error;
 }
 
+// Fonction dection zone fonction couleur.
+
 char DetecZone(void)
 {
 	char cZone;
@@ -196,95 +198,45 @@ char DetecZone(void)
 	color_Read(red, blue, green, clear);
 
 	//Rouge
-	if((red < 43) && (red > 26) && (blue < 16) && (blue > 0) && (green < 22) && (green > 4) && (clear < 52) && (clear > 33))
+	if((red < 632) && (red > 387) && (blue < 140) && (blue > 60) && (green < 230) && (green > 128) && (clear < 660) && (clear > 470))
 	{
 		cZone = 1;
 	}
 	//Bleu
-	if((red < 17) && (red > 0) && (blue < 31) && (blue > 12) && (green < 21) && (green > 3) && (clear < 43) && (clear > 25))
+	if((red < 130) && (red > 60) && (blue < 333) && (blue > 228) && (green < 185) && (green > 129) && (clear < 461) && (clear > 363))
 	{
 		cZone = 2;
 	}
 	//Vert
-	if((red < 16) && (red > 0) && (blue < 17) && (blue > 0) && (green < 21) && (green > 3) && (clear < 31) && (clear > 12))
+	if((red < 111) && (red > 55) && (blue < 131) && (blue > 73) && (green < 211) && (green > 145) && (clear < 347) && (clear > 235))
 	{
 		cZone = 3;
 	}
 	//Jaune
-	if((red < 77) && (red > 59) && (blue < 26) && (blue > 8) && (green < 71) && (green > 53) && (clear < 136) && (clear > 118))
+	if((red < 906) && (red > 790) && (blue < 300) && (blue > 213) && (green < 906) && (green > 773) && (clear < 906) && (clear > 886))
 	{
 		cZone = 4;
 	}
 	//Blanc
-	if((red < 75) && (red > 56) && (blue < 65) && (blue > 47) && (green < 80) && (green > 61) && (clear < 172) && (clear > 155))
+	if((red < 906) && (red > 886) && (blue < 937) && (blue > 746) && (green < 906) && (green > 886) && (clear < 906) && (clear > 886))
 	{
 		cZone = 5;
 	}
 	//Gris
-	if((red < 46) && (red > 28) && (blue < 42) && (blue > 24) && (green < 50) && (green > 31) && (clear < 102) && (clear > 82))
+	if((red < 541) && (red > 390) && (blue < 487) && (blue > 379) && (green < 588) && (green > 420) && (clear < 935) && (clear > 886))
 	{
 		cZone = 6;
 	}
 	//Rose
-	if((red < 62) && (red > 43) && (blue < 31) && (blue > 13) && (green < 37) && (green > 19) && (clear < 90) && (clear > 72))
+	if((red < 875) && (red > 703) && (blue < 380) && (blue > 293) && (green < 490) && (green > 370) && (clear < 906) && (clear > 886))
 	{
 		cZone = 7;
 	}
 
-	switch(cZone)
-			{
-				case 1:
-					LCD_ClearAndPrint("Zone : Rouge");
-				break;
-
-				case 2:
-					LCD_ClearAndPrint("Zone : Bleu");
-				break;
-
-				case 3:
-					LCD_ClearAndPrint("Zone : Vert");
-				break;
-
-				case 4:
-					LCD_ClearAndPrint("Zone : Jaune");
-				break;
-
-				case 5:
-					LCD_ClearAndPrint("Zone : Blanc");
-				break;
-
-				case 6:
-					LCD_ClearAndPrint("Zone : Gris");
-				break;
-
-				case 7:
-					LCD_ClearAndPrint("Zone : Rose");
-				break;
-
-				default:
-					LCD_ClearAndPrint("Zone : Aucun");
-				break;
-			}
-
-	LCD_Printf("R=%d, G=%d, B=%d, C=%d", red, green, blue, clear);
-
 	return cZone;
 }
 
-char TestHue(void)
-{
-	char couleur;
-	int red,blue,green,clear,r,g,b;
-	float hue;
-
-	color_Read(red, blue, green, clear);
-
-	r = red/1024;
-	g = blue/1024;
-	b = green/1024;
-
-	return couleur;
-}
+// Fonction Main
 
 int main()
 {
@@ -299,19 +251,17 @@ int main()
 	cap_SetValue(CAP_BLUE, 15);
 	cap_SetValue(CAP_CLEAR, 15);
 
-	integrationTime_SetValue(INTEGRATION_RED, 255);
-	integrationTime_SetValue(INTEGRATION_GREEN, 255);
-	integrationTime_SetValue(INTEGRATION_BLUE, 255);
-	integrationTime_SetValue(INTEGRATION_CLEAR, 255);
+	integrationTime_SetValue(INTEGRATION_RED, 4095);
+	integrationTime_SetValue(INTEGRATION_GREEN, 4095);
+	integrationTime_SetValue(INTEGRATION_BLUE, 4095);
+	integrationTime_SetValue(INTEGRATION_CLEAR, 4095);
+
+	MOTOR_SetSpeed(MOTOR_LEFT,46);
+	MOTOR_SetSpeed(MOTOR_RIGHT,50);
 
 	while(1)
 	{
-		//color_Read(red, blue, green, clear);
-		//LCD_ClearAndPrint("R=%d, G=%d, B=%d, C=%d", red, green, blue, clear);
-
-		//Zone = ;
-		//LCD_ClearAndPrint("%d",DetecZone());
-		/*switch(DetecZone())
+		switch(DetecZone())
 		{
 		case 1:
 			LCD_ClearAndPrint("Zone : Rouge");
@@ -345,9 +295,9 @@ int main()
 			LCD_ClearAndPrint("Zone : Aucun");
 		break;
 
-		}*/
+		}
 
-		THREAD_MSleep(500);
+		THREAD_MSleep(50);
 	}
 
 	return 0;
