@@ -188,9 +188,108 @@ int color_Init(int& dev_handle)
 	return error;
 }
 
+char DetecZone(void)
+{
+	char cZone;
+	int red,blue,green,clear;
+
+	color_Read(red, blue, green, clear);
+
+	//Rouge
+	if((red < 43) && (red > 26) && (blue < 16) && (blue > 0) && (green < 22) && (green > 4) && (clear < 52) && (clear > 33))
+	{
+		cZone = 1;
+	}
+	//Bleu
+	if((red < 17) && (red > 0) && (blue < 31) && (blue > 12) && (green < 21) && (green > 3) && (clear < 43) && (clear > 25))
+	{
+		cZone = 2;
+	}
+	//Vert
+	if((red < 16) && (red > 0) && (blue < 17) && (blue > 0) && (green < 21) && (green > 3) && (clear < 31) && (clear > 12))
+	{
+		cZone = 3;
+	}
+	//Jaune
+	if((red < 77) && (red > 59) && (blue < 26) && (blue > 8) && (green < 71) && (green > 53) && (clear < 136) && (clear > 118))
+	{
+		cZone = 4;
+	}
+	//Blanc
+	if((red < 75) && (red > 56) && (blue < 65) && (blue > 47) && (green < 80) && (green > 61) && (clear < 172) && (clear > 155))
+	{
+		cZone = 5;
+	}
+	//Gris
+	if((red < 46) && (red > 28) && (blue < 42) && (blue > 24) && (green < 50) && (green > 31) && (clear < 102) && (clear > 82))
+	{
+		cZone = 6;
+	}
+	//Rose
+	if((red < 62) && (red > 43) && (blue < 31) && (blue > 13) && (green < 37) && (green > 19) && (clear < 90) && (clear > 72))
+	{
+		cZone = 7;
+	}
+
+	switch(cZone)
+			{
+				case 1:
+					LCD_ClearAndPrint("Zone : Rouge");
+				break;
+
+				case 2:
+					LCD_ClearAndPrint("Zone : Bleu");
+				break;
+
+				case 3:
+					LCD_ClearAndPrint("Zone : Vert");
+				break;
+
+				case 4:
+					LCD_ClearAndPrint("Zone : Jaune");
+				break;
+
+				case 5:
+					LCD_ClearAndPrint("Zone : Blanc");
+				break;
+
+				case 6:
+					LCD_ClearAndPrint("Zone : Gris");
+				break;
+
+				case 7:
+					LCD_ClearAndPrint("Zone : Rose");
+				break;
+
+				default:
+					LCD_ClearAndPrint("Zone : Aucun");
+				break;
+			}
+
+	LCD_Printf("R=%d, G=%d, B=%d, C=%d", red, green, blue, clear);
+
+	return cZone;
+}
+
+char TestHue(void)
+{
+	char couleur;
+	int red,blue,green,clear,r,g,b;
+	float hue;
+
+	color_Read(red, blue, green, clear);
+
+	r = red/1024;
+	g = blue/1024;
+	b = green/1024;
+
+	return couleur;
+}
+
 int main()
 {
 	int red, blue, green, clear;
+	char Zone = 0;
 
 	//initialisation du capteur
 	ERROR_CHECK(color_Init(adjd_dev));
@@ -207,9 +306,48 @@ int main()
 
 	while(1)
 	{
-		color_Read(red, blue, green, clear);
-		LCD_ClearAndPrint("R=%d, G=%d, B=%d, C=%d", red, green, blue, clear);
-		THREAD_MSleep(1000);
+		//color_Read(red, blue, green, clear);
+		//LCD_ClearAndPrint("R=%d, G=%d, B=%d, C=%d", red, green, blue, clear);
+
+		//Zone = ;
+		//LCD_ClearAndPrint("%d",DetecZone());
+		/*switch(DetecZone())
+		{
+		case 1:
+			LCD_ClearAndPrint("Zone : Rouge");
+		break;
+
+		case 2:
+			LCD_ClearAndPrint("Zone : Bleu");
+		break;
+
+		case 3:
+			LCD_ClearAndPrint("Zone : Vert");
+		break;
+
+		case 4:
+			LCD_ClearAndPrint("Zone : Jaune");
+		break;
+
+		case 5:
+			LCD_ClearAndPrint("Zone : Blanc");
+		break;
+
+		case 6:
+			LCD_ClearAndPrint("Zone : Gris");
+		break;
+
+		case 7:
+			LCD_ClearAndPrint("Zone : Rose");
+		break;
+
+		default:
+			LCD_ClearAndPrint("Zone : Aucun");
+		break;
+
+		}*/
+
+		THREAD_MSleep(500);
 	}
 
 	return 0;
