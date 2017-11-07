@@ -11,14 +11,10 @@
 
 #include <libarmus.h>
 #include <math.h>
+#include "capteur_infrarouge.h"
 // Global Functions
 
-float CalculDeDistance(float fTensionDistance);
-float voltage(int EntreeAnalogique);
-//void afficher_detection();
-float DistanceCapteurChoisi(int numCapteur);
-
-int main()
+/*int main()
 {
 	float ir1;
 	float ir2;
@@ -33,7 +29,7 @@ int main()
 		THREAD_MSleep(500);
 	}
 	return 0;
-}
+}*/
 
 float DistanceCapteurChoisi(int numCapteur)
 {
@@ -80,9 +76,163 @@ float voltage(int EntreeAnalogique)
 	return voltage;
 }
 
+
+/*
+void Avancer(int vitesse, int vitesseD, int vitesseG, int *err, int *compteurG, int *compteurD,)
+{
+
+	MOTOR_SetSpeed(MOTOR_LEFT,vitesse);
+	MOTOR_SetSpeed(MOTOR_RIGHT,vitesseD);
+	//float iNbEncodeur = dist/dCm_Coche;
+	//while(compteurD <= iNbEncodeur)
+	//{
+	vitesse += PID();
+
+	if((vitesse < 30) && (vitesse > 0))
+	{
+		vitesse = 30;
+	}
+	if(vitesse > 100)
+	{
+		vitesse = 100;
+	}
+	if((vitesse > -30) && (vitesse < 0))
+	{
+		vitesse = -30;
+	}
+	if(vitesse < -100)
+	{
+		vitesse = -100;
+	}
+
+	if((DIGITALIO_Read(BMP_FRONT) == 1) || (DIGITALIO_Read(BMP_LEFT) == 1) || (DIGITALIO_Read(BMP_RIGHT) == 1) ||(DIGITALIO_Read(BMP_REAR) == 1))
+	{
+		MOTOR_SetSpeed(MOTOR_LEFT,0);
+		MOTOR_SetSpeed(MOTOR_RIGHT,0);
+	}
+	else
+	{
+				/*if(init)
+				{
+					MOTOR_SetSpeed(MOTOR_LEFT,55);
+					if(SYSTEM_ReadTimerMSeconds() >= 250.0)
+					{
+						init = false;
+						SYSTEM_ResetTimer();
+					}
+				}
+				else
+				{
+					MOTOR_SetSpeed(MOTOR_LEFT,62);
+				}
+
+		MOTOR_SetSpeed(MOTOR_LEFT,vitesseG);
+		MOTOR_SetSpeed(MOTOR_RIGHT,vitesse);
+				//LCD_Printf("compteur D: %i compteur G: %i\n" , compteurD, compteurG);
+				//_iVitesse = vitesse;
+	}
+	THREAD_MSleep(50);
+	//compteurG = 0;
+	//compteurD = 0;
+	*err = 0;
+	ENCODER_Read(ENCODER_RIGHT);
+	ENCODER_Read(ENCODER_LEFT);
+
+}
+*/
+
+/*
+int PID(int *compteurG, int *compteurD, int *err)
+{
+
+	int encD = 0;
+	int encG = 0;
+	int multi = 0;
+	float incrVitesse = 0;
+
+	if(SYSTEM_ReadTimerMSeconds() >= 150.0)
+	{
+		SYSTEM_ResetTimer();
+		//cycles++;
+		encD = ENCODER_Read(ENCODER_RIGHT);
+		encG = ENCODER_Read(ENCODER_LEFT);
+		*compteurG += encG;
+		*compteurD += encD;
+
+		float diff = encG - encD;
+		*err += *compteurG - *compteurD;
+		incrVitesse = ((diff * 0.6) + (err * 0.008));
+		//LCD_Printf("err %i \n", (int)diff);
+		if (compteurD > 150){
+			incrVitesse = ((diff * 0.6) + (err * 0.008));
+		}
+		else{
+			incrVitesse = 0;
+		}
+		//_erreurTot += incrVitesse;
+		//LCD_Printf("Valeur erreur Totale : %f \n", incrVitesse);
+		//LCD_Printf("diff Total : %d \n", (int)diff);
+		//multi = (int)incrVitesse + 1;
+
+		if((incrVitesse) > 1.0)
+		{
+			//LCD_Printf("PLUS %i \n", (int)incrVitesse);
+
+			//LCD_Printf("PLUS ");
+			//if((incrVitesse - (int)incrVitesse) > 0.5)
+			//	multi = (int)incrVitesse + 1;
+			//else
+				multi = (int)incrVitesse;
+
+			//_erreurTot = 0;
+		}
+		else if((incrVitesse) < -1.0)
+		{
+			//LCD_Printf("MOIN %i \n", (int)incrVitesse);
+
+			//if((incrVitesse - (int)incrVitesse) < -0.5)
+				multi = (int)incrVitesse - 1;
+			//else
+				//multi = (int)incrVitesse;
+
+			//multi = multi *2;
+			//_erreurTot = 0;
+		}
+
+
+
+
+		//LCD_Printf("Valeur enc G : %d", encG);
+
+		//LCD_Printf("Valeur de diff : %d \n", diff);
+		//LCD_Printf("Valeur de err %d \n", err);
+
+
+
+		//if(encG != ENCODEURD)
+		//{
+			//iCalTrans = multi;
+		//}
+
+		//multi = (int)incrVitesse;
+	}
+
+	/*float val = _iVitesse + multi;
+	if(val - (int)val > 0.5)
+		return (int)val + 1;
+	else
+		return (int)val;
+
+	return multi;
+
+	//LCD_Printf("Valeur PID : %d \n", multi);
+}
+
+*/
+
 /* Essai non concluant avec la fonction IR_Detect()
  * Elle ne retourne pas ce qu'on veut (La distance)
- * void afficher_detection()
+void afficher_detection()
 {
 	int ir_f;
 
@@ -102,65 +252,3 @@ float voltage(int EntreeAnalogique)
 	 }
 }*/
 
-
-
-
-
-
-
-// Include Files
-
-//#include <libarmus.h>
-/*
-// Global Functions
-void Avancer();
-// Variables
-
-void imprimer()
-{
-	LCD_Printf("test1\n");
-}
-
-bool i = true;
-
-int main()
-{
-	LCD_Printf("Hello World!\n My name is Philippe\n");
-	SYSTEM_ResetTimer();
-	while(i)
-	{
-		Avancer();
-		if(DIGITALIO_Read(BMP_FRONT) == 1)
-		{
-			MOTOR_SetSpeed(MOTOR_LEFT, 0);
-			MOTOR_SetSpeed(MOTOR_RIGHT, 0);
-			i = false;
-		}
-	}
-	return 0;
-}
-
-void Avancer()
-{
-	int vitesse;
-	int valEncD; // Valeur de l'encodeur droit
-	int valEncG; // Valeur de l'encodeur gauche
-	int ENCODEURD; // Valeur trouvée encodeur droit
-	int ENCODEURG; // Valeur trouvée encodeur gauche
-	int calTrans; // Valeur de transition
-
-	valEncG = ENCODER_Read(ENCODER_LEFT);
-	valEncG = ENCODER_Read(ENCODER_RIGHT);
-
-	if(SYSTEM_ReadTimerMSeconds() >= 500.0)
-	{
-		LCD_Printf("%d\n", SYSTEM_ReadTimerMSeconds());
-		SYSTEM_ResetTimer();
-		valEncG = ENCODER_Read(ENCODER_LEFT);
-		valEncG = ENCODER_Read(ENCODER_RIGHT);
-	}
-
-	MOTOR_SetSpeed(MOTOR_LEFT, 75);
-	MOTOR_SetSpeed(MOTOR_RIGHT, 75);
-}
-*/
