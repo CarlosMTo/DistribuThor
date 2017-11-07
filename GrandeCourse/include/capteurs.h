@@ -6,6 +6,7 @@ class Capteur
 
 public:
 	float GetDistance(int capteur);
+	int GetLineVoltage();
 
 private:
 

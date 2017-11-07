@@ -1,21 +1,19 @@
-/*
-============================================================================
- Name : GrandeCourse.cpp
- Author :
- Version :
- Description : Hello world - Exe source file
-============================================================================
-*/
+
 
 // Include Files
 
 #include <libarmus.h>
+#include "capteurSon.h"
 
 // Global Functions
 
 int main()
 {
-	LCD_Printf("Hello World!\n");
+	LCD_Printf("nigger \n");
+
+	CapteurSon cptson;
+
+	cptson.ecouter();
 
 	return 0;
 }
