@@ -5,11 +5,9 @@ class CapteurSon
 {
 
 public:
-	//bool ecouter(bool actif);
-	void ecouter();
-	bool m_son;
+	bool ecouter(bool Etat);
 private:
-
+	bool m_son;
 
 };
 

@@ -21,11 +21,8 @@ src/main.o src/main.o: ../src/main.cpp \
   C:/Program\ Files\ (x86)/ArmusIDE/librairie/include/system_api.h \
   C:/Program\ Files\ (x86)/ArmusIDE/librairie/include/thread_api.h \
   C:/Program\ Files\ (x86)/ArmusIDE/librairie/include/i2c_api.h \
-  C:/Users/Utilisateur/Dropbox/UNI\ GI/solutions/GrandeCourse/include/capteurSon.h \
-  C:/Users/Utilisateur/Dropbox/UNI\ GI/solutions/GrandeCourse/include/deplacement.h \
-  C:/Users/Utilisateur/Dropbox/UNI\ GI/solutions/GrandeCourse/include/capteurCouleur.h \
-  C:/Users/Utilisateur/Dropbox/UNI\ GI/solutions/GrandeCourse/include/capteurInfra.h \
-  C:/Users/Utilisateur/Dropbox/UNI\ GI/solutions/GrandeCourse/include/capteurLigne.h
+  ../src/capteurSon.h ../src/deplacement.h ../src/capteurCouleur.h \
+  ../src/capteurInfra.h ../src/capteurLigne.h ../src/capteurs.h
 
 C:/Program\ Files\ (x86)/ArmusIDE/librairie/include/libarmus.h:
 
@@ -71,12 +68,14 @@ C:/Program\ Files\ (x86)/ArmusIDE/librairie/include/thread_api.h:
 
 C:/Program\ Files\ (x86)/ArmusIDE/librairie/include/i2c_api.h:
 
-C:/Users/Utilisateur/Dropbox/UNI\ GI/solutions/GrandeCourse/include/capteurSon.h:
+../src/capteurSon.h:
 
-C:/Users/Utilisateur/Dropbox/UNI\ GI/solutions/GrandeCourse/include/deplacement.h:
+../src/deplacement.h:
 
-C:/Users/Utilisateur/Dropbox/UNI\ GI/solutions/GrandeCourse/include/capteurCouleur.h:
+../src/capteurCouleur.h:
 
-C:/Users/Utilisateur/Dropbox/UNI\ GI/solutions/GrandeCourse/include/capteurInfra.h:
+../src/capteurInfra.h:
 
-C:/Users/Utilisateur/Dropbox/UNI\ GI/solutions/GrandeCourse/include/capteurLigne.h:
+../src/capteurLigne.h:
+
+../src/capteurs.h:

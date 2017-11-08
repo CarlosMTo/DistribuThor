@@ -1,9 +1,36 @@
-#include "capteurLigne.h"
-#include <libarmus.h>
+#include "capteurs.h"
+#include <math.h>
 
 #define PIN_CAPTEUR_LIGNE 8
 
-int CapteurLigne::suiveur()
+/*float Capteur::GetDistance(int capteur)
+{
+	DIGITALIO_Write(A0, 0); // A0
+	DIGITALIO_Write(A1, 0); // A1
+	DIGITALIO_Write(A2, 0); // A2
+
+	switch(capteur)
+	{
+	case 1:
+		DIGITALIO_Write(A0, 1); // A0
+		DIGITALIO_Write(A1, 0); // A1
+		break;
+	case 2:
+		DIGITALIO_Write(A0, 0); // A0
+		DIGITALIO_Write(A1, 1); // A1
+		break;
+	case 0:
+		DIGITALIO_Write(A0, 0); // A0
+		DIGITALIO_Write(A1, 0); // A1
+		break;
+	default:
+		break;
+	}
+
+	float distance = 28.652 * pow((((float)ANALOG_Read(2)) * 5.0 / 1023.0), -1.167);
+	return distance;
+}*/
+int Capteur::GetLineVoltage()
 {
 	// Voltages Analogiques
 	double dVoltCentre = 3.72;
@@ -18,7 +45,7 @@ int CapteurLigne::suiveur()
 
 	// lecture port analogique
 	int iValSuiveur;
-	iValSuiveur = ANALOG_Read(PIN_CAPTEUR_LIGNE);
+	//iValSuiveur = ANALOG_Read(PIN_CAPTEUR_LIGNE);
 
 	// sortie
 	int iResSuiveur = 0;
@@ -35,10 +62,12 @@ int CapteurLigne::suiveur()
 	{
 		iResSuiveur = 3;
 	}
-	else if (iValSuiveur == 0){
+	else if (iValSuiveur == 0)
+	{
 		iResSuiveur = 4;
 	}
-	else{
+	else
+	{
 		iResSuiveur = 5;
 	}
 

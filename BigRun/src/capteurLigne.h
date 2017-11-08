@@ -11,4 +11,4 @@ private:
 };
 
 
-#endif //CAPTEURLIGNE_H__
+#endif CAPTEURLIGNE_H__
