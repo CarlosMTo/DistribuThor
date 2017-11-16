@@ -3,7 +3,7 @@
  Name : Suiveur Test
  Author : Carlos Torres
  Version : A
- Description : test des entrÃ©es analogiques pour le suiveur
+ Description : test des entrées analogiques pour le suiveur
 ============================================================================
 */
 // Include Files
@@ -28,25 +28,37 @@ int main()
 		THREAD_MSleep(250);
 	
 	}*/
+	MOTOR_SetSpeed(MOTOR_LEFT,35);
+	MOTOR_SetSpeed(MOTOR_RIGHT,35);
 	
 	while (1){
 		iResSuiveur = iSuiveur();
 		if (iResSuiveur == 1) {
 			LCD_Printf("Tout droit\n");
+			MOTOR_SetSpeed(MOTOR_LEFT,35);
+			MOTOR_SetSpeed(MOTOR_RIGHT,35);
 		}
 		else if (iResSuiveur == 2){
-			v
+			LCD_Printf("Tourner Gauche\n");
+			MOTOR_SetSpeed(MOTOR_LEFT,0);
+			MOTOR_SetSpeed(MOTOR_RIGHT,35);
 		}
 		else if (iResSuiveur == 3 ){
 			LCD_Printf("Tourner droite\n");
+			MOTOR_SetSpeed(MOTOR_LEFT,35);
+			MOTOR_SetSpeed(MOTOR_RIGHT,0);
 		}
 		else if (iResSuiveur == 4){
 			LCD_Printf("Autre lecture\n");
+			MOTOR_SetSpeed(MOTOR_LEFT,35);
+			MOTOR_SetSpeed(MOTOR_RIGHT,35);
 		}
 		else {
 			LCD_Printf("Erreur\n");
+			MOTOR_SetSpeed(MOTOR_LEFT,35);
+			MOTOR_SetSpeed(MOTOR_RIGHT,35);
 		}
-		THREAD_MSleep(250);
+		THREAD_MSleep(100);
 	}
 	
 	//THREAD_Destroy(&thread1);
@@ -62,15 +74,15 @@ int main()
 // Prototype:       int iSuiveur();
 // Description:
 //
-// Parametres   sortie int pour donner l'Ã©tat de lecture du suiveur.
+// Parametres   sortie int pour donner l'état de lecture du suiveur.
 //
 //*****************************************************************************
 
 int iSuiveur(){
 	// Voltages Analogiques
-	double dVoltCentre = 3.72;
-	double dVoltGauche = 2.22;
-	double dVoltDroite = 4.52;
+	double dVoltDroite = 3.57;
+	double dVoltCentre = 2.14;
+	double dVoltGauche = 4.33;
 	
 	// marge d'erreur voltage
 	double dMargeVolt = 0.10;
@@ -85,16 +97,16 @@ int iSuiveur(){
 	// sortie
 	int iResSuiveur = 0;
 	
-	if (iValSuiveur <= (dVoltCentre + dMargeVolt) * dConvert_V_int) && (iValSuiveur >= (dVoltCentre - dMargeVolt) * dConvert_V_int)){
+	if ((iValSuiveur <= (dVoltCentre + dMargeVolt) * dConvert_V_int) && (iValSuiveur >= (dVoltCentre - dMargeVolt) * dConvert_V_int)){
 		iResSuiveur = 1;
 	}
-	else if (iValSuiveur <= (dVoltGauche + dMargeVolt) * dConvert_V_int) && (iValSuiveur >= (dVoltGauche - dMargeVolt) * dConvert_V_int)){
+	else if ((iValSuiveur <= (dVoltGauche + dMargeVolt) * dConvert_V_int) && (iValSuiveur >= (dVoltGauche - dMargeVolt) * dConvert_V_int)){
 		iResSuiveur = 2;
 	}
-	else if (iValSuiveur <= (dVoltDroite + dMargeVolt) * dConvert_V_int) && (iValSuiveur >= (dVoltDroite - dMargeVolt) * dConvert_V_int)){
+	else if ((iValSuiveur <= (dVoltDroite + dMargeVolt) * dConvert_V_int) && (iValSuiveur >= (dVoltDroite - dMargeVolt) * dConvert_V_int)){
 		iResSuiveur = 3;
 	}
-	else if (iValSuiveur == 0){
+	else if (iValSuiveur >=  150){
 		iResSuiveur = 4;
 	}
 	else{
