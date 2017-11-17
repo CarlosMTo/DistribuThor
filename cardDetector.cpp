@@ -1,6 +1,6 @@
 #include <libarmus.h>
 #include "cardDetector.h"
-
+#include "capteurCouleur.h"
 
 int CardDetector::getCouleur()
 {
