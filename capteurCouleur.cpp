@@ -187,48 +187,47 @@ int CapteurCouleur::color_Init(int& dev_handle)
 
 // Fonction dection zone fonction couleur.
 
-char CapteurCouleur::DetecZone(void)
+char CapteurCouleur::DetecCarte(void)
 {
-	char cZone;
+	char cCarte;
 	int red,blue,green,clear;
+	float Y,U,V;
 
 	color_Read(red, blue, green, clear);
 
-	//Rouge
-	if((red < 652) && (red > 367) && (blue < 160) && (blue > 40) && (green < 230) && (green > 108) && (clear < 680) && (clear > 450))
+	Y = (0.299 * red) + (0.587 * green) + (0.114 * blue);
+	U = (0.492 *(blue - Y));
+	V = (0.877 * (red - Y));
+
+		LCD_ClearAndPrint ("Y: %.3f  U: %.3f  V: %.3f  ",Y,U,V);
+
+
+
+	//Ace
+	if((Y < ) && (Y > ) && (U < ) && (U > ) && (V < ) && (V > ) )
 	{
-		cZone = 1;
-	}
-	//Bleu
-	if((red < 150) && (red > 40) && (blue < 353) && (blue > 208) && (green < 205) && (green > 109) && (clear < 481) && (clear > 343))
-	{
-		cZone = 2;
-	}
-	//Vert
-	if((red < 131) && (red > 35) && (blue < 151) && (blue > 53) && (green < 231) && (green > 125) && (clear < 367) && (clear > 215))
-	{
-		cZone = 3;
-	}
-	//Jaune
-	if((red < 926) && (red > 770) && (blue < 320) && (blue > 193) && (green < 926) && (green > 753) && (clear < 926) && (clear > 866))
-	{
-		cZone = 4;
-	}
-	//Blanc
-	if((red < 926) && (red > 866) && (blue < 957) && (blue > 726) && (green < 926) && (green > 866) && (clear < 926) && (clear > 866))
-	{
-		cZone = 5;
-	}
-	//Gris
-	if((red < 561) && (red > 370) && (blue < 507) && (blue > 359) && (green < 608) && (green > 400) && (clear < 955) && (clear > 866))
-	{
-		cZone = 6;
-	}
-	//Rose
-	if((red < 885) && (red > 693) && (blue < 390) && (blue > 283) && (green < 500) && (green > 360) && (clear < 916) && (clear > 876))
-	{
-		cZone = 7;
+		cCarte = 1;
 	}
 
-	return cZone;
+	//2
+	if((Y < ) && (Y > ) && (U < ) && (U > ) && (V < ) && (V > ) )
+	{
+		cCarte = 2;
+	}
+
+	//3
+	if((Y < ) && (Y > ) && (U < ) && (U > ) && (V < ) && (V > ) )
+	{
+		cCarte = 3;
+	}
+
+	//10
+	if((Y < ) && (Y > ) && (U < ) && (U > ) && (V < ) && (V > ) )
+	{
+		cCarte = 10;
+	}
+
+
+
+	return cCarte;
 }

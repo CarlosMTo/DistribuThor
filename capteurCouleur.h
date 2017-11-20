@@ -26,7 +26,7 @@ class CapteurCouleur
 {
 
 public:
-	char DetecZone(void);
+	char DetecCarte(void);
 	int color_Init(int& dev_handle);
 	void cap_SetValue(unsigned char cap_address, unsigned char cap_value);
 	void adjd_SetRegister(unsigned char reg, unsigned char val);
