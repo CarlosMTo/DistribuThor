@@ -204,7 +204,7 @@ char CapteurCouleur::DetecCarte(void)
 
 
 	//5
-	if((Y < 112) && (Y > 95) && (U < -12) && (U > -17) && (V < 15) && (V > 10) )
+	if((Y < 110) && (Y > 95) && (U < -10) && (U > -20) && (V < 20) && (V > 5) )
 	{
 
 		LCD_ClearAndPrint("Valeur de la carte: 5");
