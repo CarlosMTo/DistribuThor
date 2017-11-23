@@ -203,28 +203,33 @@ char CapteurCouleur::DetecCarte(void)
 
 
 
-	//Ace
-	if((Y < ) && (Y > ) && (U < ) && (U > ) && (V < ) && (V > ) )
+	//5
+	if((Y < 112) && (Y > 95) && (U < -12) && (U > -17) && (V < 15) && (V > 10) )
 	{
-		cCarte = 1;
+
+		LCD_ClearAndPrint("Valeur de la carte: 5");
+		//cCarte = 1;
 	}
 
-	//2
-	if((Y < ) && (Y > ) && (U < ) && (U > ) && (V < ) && (V > ) )
+	//6
+	if((Y < 550) && (Y > 480) && (U < (-160)) && (U > (-177)) && (V < 365) && (V > 350) )
 	{
-		cCarte = 2;
+		LCD_ClearAndPrint("Valeur de la carte: 6");
+		//cCarte = 2;
 	}
 
-	//3
-	if((Y < ) && (Y > ) && (U < ) && (U > ) && (V < ) && (V > ) )
+	//7
+	if((Y < 390) && (Y > 375) && (U < (-27)) && (U > (-30)) && (V < (-115)) && (V > (-125)) )
 	{
-		cCarte = 3;
+		LCD_ClearAndPrint("Valeur de la carte: 7");
+		//cCarte = 3;
 	}
 
-	//10
-	if((Y < ) && (Y > ) && (U < ) && (U > ) && (V < ) && (V > ) )
+	//9
+	if((Y < 218) && (Y > 175) && (U < (-41)) && (U > (-52)) && (V < 83) && (V > 67) )
 	{
-		cCarte = 10;
+		LCD_ClearAndPrint("Valeur de la carte: 9");
+		//cCarte = 10;
 	}
 
 

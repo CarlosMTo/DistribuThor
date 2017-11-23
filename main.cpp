@@ -55,8 +55,8 @@ while(true)
 		if(cJoueur == cEmplacement)
 		{
 			LCD_ClearAndPrint("Voulez-vous une autre carte? \n");
-			LCD_ClearAndPrint("Si oui, appuyez sur le button vert \n"); //digitalread 9
-			LCD_ClearAndPrint("Si non, appuyez sur le button rouge \n");//digitalread 10
+			LCD_ClearAndPrint("Si OUI, appuyez sur le button vert \n"); //digitalread 9
+			LCD_ClearAndPrint("Si NON, appuyez sur le button rouge \n");//digitalread 10
 
 			oldstate = DIGITALIO_Read(9);
 			THREAD_MSleep(10);
