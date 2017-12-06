@@ -8,7 +8,7 @@
 #include "capteurLigne.h"
 #include "cardDetector.h"
 
-void DonnerCarte();
+void DonnerCarte(int compteur);
 
 #define iAnalog_input_suiveur 8
 
@@ -17,171 +17,204 @@ int iSuiveur();
 
 int main()
 {
+	unsigned int stream;
 	char cPhase = 0;
 	char cJoueur = 0;
 	int cEmplacement = 0;
-	int compteur=0;
+	int compteur=1;
 	int PointJoueur[3] = {0,0,0};
 	char oldstateR, oldstateV, actualStateR, actualStateV;
 	CardDetector detect;
 	CapteurCouleur couleur;
 
-	oldstateV = DIGITALIO_Read(9);
+	oldstateV = DIGITALIO_Read(11);
 	oldstateR = DIGITALIO_Read(10);
+	SYSTEM_ResetTimer();
 
+	AUDIO_SetVolume(100) ;
+	stream = AUDIO_PlayFile("Commence_Robot.wav");
 
-	//AUDIO_PlayFile("OutHere1.wav");
-
-	//AUDIO_SetVolume(60) ;
-
-while(true)
-{
-	//detect.getPoint();
-
-			/*
-			LCD_ClearAndPrint("Voulez-vous une autre carte? \n");
-			LCD_ClearAndPrint("Si OUI, appuyez sur le button vert \n"); //digitalread 9
-			LCD_ClearAndPrint("Si NON, appuyez sur le button rouge \n");//digitalread 10
-
-			actualStateV = DIGITALIO_Read(9);
-			THREAD_MSleep(10);
-
-			if(oldstateV != actualStateV)
-			{
-
-				couleur.DetecCarte(PointJoueur[]);
-
-				oldstateV = actualStateV;
-				PointJoueur[cEmplacement] += detect.getPoint();
-				//tourner le moteur de la carte
-			}
-
-
-
-			actualStateR = DIGITALIO_Read(10);
-			THREAD_MSleep(10);
-
-			if(oldstateR != actualStateR)
-			{
-
-
-				oldstateR = actualStateR;
-				cJoueur++;											//no card, move to next player
-			}
-
-
-	THREAD_MSleep(500);
-	*/
-
-	switch(cPhase)
+	while(true)
 	{
-	case 0:		//tour 1
 
-		//appel de la fonction emplacement (phil)
-
-		if(JoueurDetecte())
+		if(20 < SYSTEM_ReadTimerMSeconds())
 		{
-			cEmplacement++;
-			//LCD_Printf("%d\n", cEmplacement);
-
-
-		//if(cJoueur == cEmplacement - 1)//Detection de l'emplacement (Retourner dans cEmplacement)
-		//{
-			//Points des joueurs
-			PointJoueur[cEmplacement - 1] += couleur.DetecCarte(PointJoueur[cEmplacement - 1]);
-			//LCD_Printf("%s \n", PointJoueur[cEmplacement-1]);
-			THREAD_MSleep(500);
-			//donne carte
-			DonnerCarte();
-			THREAD_MSleep(3000);
-			//Points des joueurs
-			PointJoueur[cEmplacement - 1] += couleur.DetecCarte(PointJoueur[cEmplacement - 1]);
-			THREAD_MSleep(500);
-			//donne carte
-			DonnerCarte();
-			LCD_Printf("\n Pointage du joueur: %d \n", PointJoueur[cEmplacement-1]);
-			THREAD_MSleep(5000);
-			MOTOR_SetSpeed(MOTOR_LEFT,40);
-			MOTOR_SetSpeed(MOTOR_RIGHT,43);
-			THREAD_MSleep(1000);
+			SYSTEM_ResetTimer();
+			DIGITALIO_Write(13,1);
+			DIGITALIO_Write(14,0);
 		}
-			//cJoueur++; // Prochain joueur;
-		//}
-		if(cEmplacement == 3)
+		else
 		{
-			cEmplacement = 0;
-			cPhase++;
+			DIGITALIO_Write(13,0);
+			DIGITALIO_Write(14,1);
 		}
 
-	break;
 
-	case 1:		//tour 2
-		/*
-		if(cJoueur == cEmplacement)
+
+
+		switch(cPhase)
 		{
-			LCD_ClearAndPrint("Voulez-vous une autre carte? \n");
-			LCD_ClearAndPrint("Si OUI, appuyez sur le button vert \n"); //digitalread 9
-			LCD_ClearAndPrint("Si NON, appuyez sur le button rouge \n");//digitalread 10
+		case 0:		//tour 1
 
-			oldstate = DIGITALIO_Read(9);
-			THREAD_MSleep(10);
 
-			if(oldstate != DIGITALIO_Read(9))
+			//THREAD_MSleep(3000);
+			//appel de la fonction emplacement (phil)
+
+			if(JoueurDetecte())
 			{
-				LCD_ClearAndPrint("Vert");
-				PointJoueur[cEmplacement] += detect.getPoint();
-				//tourner le moteur de la carte
+				cEmplacement++;
+				//LCD_Printf("%d\n", cEmplacement);
+
+
+			//if(cJoueur == cEmplacement - 1)//Detection de l'emplacement (Retourner dans cEmplacement)
+			//{
+				//Points des joueurs
+				PointJoueur[cEmplacement - 1] += couleur.DetecCarte(PointJoueur[cEmplacement - 1]);
+				//LCD_Printf("%s \n", PointJoueur[cEmplacement-1]);
+				THREAD_MSleep(250);
+				//donne carte
+				DonnerCarte(compteur);
+				compteur++;
+				THREAD_MSleep(3000);
+				//Points des joueurs
+				PointJoueur[cEmplacement - 1] += couleur.DetecCarte(PointJoueur[cEmplacement - 1]);
+				THREAD_MSleep(250);
+				//donne carte
+				DonnerCarte(compteur);
+				compteur++;
+				LCD_Printf("\n Pointage du joueur %d: %d \n", cEmplacement, PointJoueur[cEmplacement-1]);
+				THREAD_MSleep(5000);
+				MOTOR_SetSpeed(MOTOR_LEFT,45);
+				MOTOR_SetSpeed(MOTOR_RIGHT,48);
+				THREAD_MSleep(500);
 			}
-
-
-
-			oldstate = DIGITALIO_Read(10);
-			THREAD_MSleep(10);
-
-			if(oldstate != DIGITALIO_Read(10))
+				//cJoueur++; // Prochain joueur;
+			//}
+			if(cEmplacement == 3)
 			{
-				LCD_ClearAndPrint("Rouge");
-				cJoueur++;											//no card, move to next player
-			}
-		}
-		if(cEmplacement == 3)
-		{
-			if(PointJoueur[cEmplacement] < 17)
-			{
-				PointJoueur[cEmplacement] += detect.getPoint();
-
-				//tourner moteur de la carte
-			}
-
-			if(PointJoueur[cEmplacement] > 17)
+				cEmplacement = 0;
 				cPhase++;
-		}
-		*/
+			}
 
-	break;
-
-	case 2:		//tour final
-
-		if(PointJoueur[0] > PointJoueur[2])
-			LCD_Printf("Joueur 1 a gagne");
-		if(PointJoueur[0] < PointJoueur[2])
-			LCD_Printf("Joueur 1 a perdu");
-
-		if(PointJoueur[1] > PointJoueur[2])
-			LCD_Printf("Joueur 2 a gagne");
-		if(PointJoueur[1] < PointJoueur[2])
-			LCD_Printf("Joueur 2 a perdu");
-
-
-
-	break;
-	default:
 		break;
+
+		case 1:		//tour 2
+
+			if(JoueurDetecte())
+			{
+				cEmplacement++;
+				if(cEmplacement == 3)
+				{
+					while(PointJoueur[cEmplacement - 1] < 17)
+					{
+						PointJoueur[cEmplacement - 1] += couleur.DetecCarte(PointJoueur[cEmplacement - 1]);
+						THREAD_MSleep(250);
+						//tourner moteur de la carte
+						DonnerCarte(compteur);
+						THREAD_MSleep(5000);
+					}
+
+					if(PointJoueur[cEmplacement - 1] >= 17)
+					{
+						cPhase++;
+					}
+
+					cEmplacement = 0;
+					MOTOR_SetSpeed(MOTOR_LEFT,45);
+					MOTOR_SetSpeed(MOTOR_RIGHT,48);
+					THREAD_MSleep(500);
+					break;
+				}
+				else
+				{
+					//AUDIO_StopPlayback(stream);
+					//stream = AUDIO_PlayFile("Choix_Robot.wav");
+					LCD_ClearAndPrint("\n Pointage du joueur %d: %d \n", cEmplacement, PointJoueur[cEmplacement-1]);
+					LCD_Printf("Voulez-vous une autre carte? \n");
+					LCD_Printf("Si OUI, appuyez sur le bouton vert \n"); //digitalread 9
+					LCD_Printf("Si NON, appuyez sur le bouton rouge \n");//digitalread 10
+
+					actualStateR = DIGITALIO_Read(10); // bouton rouge
+					THREAD_MSleep(10);
+
+					while(oldstateR == actualStateR && PointJoueur[cEmplacement - 1] < 21)
+					{
+
+						actualStateV = DIGITALIO_Read(11);		//bouton vert
+						THREAD_MSleep(10);
+
+						if(oldstateV != actualStateV)
+						{
+							oldstateV = actualStateV;
+							PointJoueur[cEmplacement - 1] += couleur.DetecCarte(PointJoueur[cEmplacement - 1]);
+							THREAD_MSleep(250);
+							//tourner le moteur de la carte
+							DonnerCarte(compteur);
+							LCD_Printf("\n Pointage du joueur %d: %d \n", cEmplacement, PointJoueur[cEmplacement-1]);
+							THREAD_MSleep(1000);
+						}
+
+						actualStateR = DIGITALIO_Read(10);		//no card, move to next player
+						//THREAD_MSleep(500);
+					}
+
+					oldstateR = actualStateR;
+					MOTOR_SetSpeed(MOTOR_LEFT,45);
+					MOTOR_SetSpeed(MOTOR_RIGHT,48);
+					THREAD_MSleep(500);
+				}
+			}
+			/*
+			if(cEmplacement == 3)
+			{
+				if(PointJoueur[cEmplacement - 1] < 17)
+				{
+					PointJoueur[cEmplacement - 1] += couleur.DetecCarte(PointJoueur[cEmplacement - 1]);
+
+					//tourner moteur de la carte
+					DonnerCarte(compteur);
+					THREAD_MSleep(5000);
+				}
+
+				if(PointJoueur[cEmplacement - 1] >= 17)
+					cPhase++;
+
+				cEmplacement = 0;
+			}
+*/
+
+		break;
+
+		case 2:		//tour final
+			LCD_ClearAndPrint("Pointage du croupier: %d \n", PointJoueur[2]);
+			if((PointJoueur[0] > PointJoueur[2] && PointJoueur[0] <= 21) || (PointJoueur[0] <= 21 && PointJoueur[2] > 21))
+				LCD_Printf("Joueur 1 a gagne avec %d\n", PointJoueur[0]);
+			else if(PointJoueur[0] < PointJoueur[2] || PointJoueur[0] > 21)
+				LCD_Printf("Joueur 1 a perdu avec %d\n", PointJoueur[0]);
+			else
+				LCD_Printf("Joueur 1 et le croupier sont a egalite avec %d\n", PointJoueur[0]);
+
+			if((PointJoueur[1] > PointJoueur[2] && PointJoueur[1] <= 21)  || (PointJoueur[1] <= 21 && PointJoueur[2] > 21))
+				LCD_Printf("Joueur 2 a gagne avec %d\n", PointJoueur[1]);
+			else if(PointJoueur[1] < PointJoueur[2] || PointJoueur[1] > 21)
+				LCD_Printf("Joueur 2 a perdu avec %d\n", PointJoueur[1]);
+			else
+				LCD_Printf("Joueur 2 et le croupier sont a egalite avec %d\n", PointJoueur[1]);
+			cPhase++;
+
+			MOTOR_SetSpeed(MOTOR_LEFT,0);
+			MOTOR_SetSpeed(MOTOR_RIGHT,0);
+
+		break;
+		default:
+			AUDIO_StopPlayback(stream);
+			stream = AUDIO_PlayFile("Fin_Robot.wav");
+			LCD_Printf("Fin de la partie! Merci d'avoir participe! \n");
+			THREAD_MSleep(5000);
+			return 0;
+		break;
+		}
 	}
-
-
-
-}
 	return 0;
 }
 
@@ -193,23 +226,23 @@ bool JoueurDetecte()
 	{
 	case 1:
 		//LCD_Printf("Tout droit\n");
-		MOTOR_SetSpeed(MOTOR_LEFT,40);
-		MOTOR_SetSpeed(MOTOR_RIGHT,42);
+		MOTOR_SetSpeed(MOTOR_LEFT,45);
+		MOTOR_SetSpeed(MOTOR_RIGHT,48);
 		break;
 	case 2:
 		//LCD_Printf("Tourner Gauche\n");
 		MOTOR_SetSpeed(MOTOR_LEFT,0);
-		MOTOR_SetSpeed(MOTOR_RIGHT,40);
+		MOTOR_SetSpeed(MOTOR_RIGHT,48);
 		break;
 	case 3:
 		//LCD_Printf("Tourner droite\n");
-		MOTOR_SetSpeed(MOTOR_LEFT,40);
+		MOTOR_SetSpeed(MOTOR_LEFT,45);
 		MOTOR_SetSpeed(MOTOR_RIGHT,0);
 		break;
 	case 4:
 		//LCD_Printf("Autre lecture\n");
-		MOTOR_SetSpeed(MOTOR_LEFT,40);
-		MOTOR_SetSpeed(MOTOR_RIGHT,42);
+		MOTOR_SetSpeed(MOTOR_LEFT,45);
+		MOTOR_SetSpeed(MOTOR_RIGHT,48);
 		break;
 	case 5:
 		LCD_Printf("Joueur\n");
@@ -220,13 +253,13 @@ bool JoueurDetecte()
 		break;
 	case 6:
 		//LCD_Printf("Erreur\n");
-		MOTOR_SetSpeed(MOTOR_LEFT,40);
-		MOTOR_SetSpeed(MOTOR_RIGHT,42);
+		MOTOR_SetSpeed(MOTOR_LEFT,45);
+		MOTOR_SetSpeed(MOTOR_RIGHT,48);
 		break;
 	default:
 		// LCD_Printf("Par défaut\n");
-		MOTOR_SetSpeed(MOTOR_LEFT,40);
-		MOTOR_SetSpeed(MOTOR_RIGHT,42);
+		MOTOR_SetSpeed(MOTOR_LEFT,45);
+		MOTOR_SetSpeed(MOTOR_RIGHT,48);
 		break;
 	}
 	THREAD_MSleep(100);
@@ -276,10 +309,13 @@ int iSuiveur()
 	return iResSuiveur;
 }
 
-void DonnerCarte()
+void DonnerCarte(int compteur)
 {
 	MOTOR_SetSpeed(6, 100);
-	THREAD_MSleep(1000);
+	if (compteur % 2 != 0)
+		THREAD_MSleep(750);
+	else
+		THREAD_MSleep(750);
 	MOTOR_SetSpeed(6,0);
 	THREAD_MSleep(100);
 }

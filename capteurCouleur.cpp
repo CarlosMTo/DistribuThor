@@ -200,56 +200,60 @@ int CapteurCouleur::DetecCarte(int cPointage)
 
 	//LCD_ClearAndPrint ("Y: %.3f  U: %.3f  V: %.3f  ",Y,U,V);
 
-	//10
-	if((Y < 140) && (Y > 70) && (U < -10) && (U > -22) && (V < 40) && (V > 5) )
-	{
-
-		LCD_ClearAndPrint("Valeur de la carte: 10");
-		cCarte = 10;
-	}
-
-	//6
-	if((Y < 555) && (Y > 435) && (U < (-150)) && (U > (-190)) && (V < 405) && (V > 349) )
-	{
-		LCD_ClearAndPrint("Valeur de la carte: 6");
-		cCarte = 6;
-	}
-
-
-	//9
-	if((Y < 218) && (Y > 175) && (U < (-41)) && (U > (-52)) && (V < 83) && (V > 67) )
-	{
-		LCD_ClearAndPrint("Valeur de la carte: 9");
-		cCarte = 9;
-	}
 	//Ace
-	if((Y < 340) && (Y > 259) && (U < 150) && (U > (-73)) && (V < (-50)) && (V >(-85) ) )
+	if((Y < 340) && (Y > 220) && (U < 150) && (U > (73)) && (V < (-40)) && (V >(-85) ) )
 		{
-			LCD_ClearAndPrint("Valeur de la carte: Ace");
-			if (cPointage >= 11)
+			//LCD_ClearAndPrint("Valeur de la carte: Ace");
+			if (cPointage > 10)
 				cCarte = 1;
 			else
 				cCarte = 11;
 		}
-	//7
-	if((Y < 270) && (Y > 185) && (U < (-15)) && (U > (-25)) && (V < (-55)) && (V > (-95) ))
-		{
-			//LCD_ClearAndPrint("Valeur de la carte: 7");
-			cCarte = 7;
-			LCD_ClearAndPrint("Valeur de la carte: %d", cCarte);
-		}
+
 	//4
 	if((Y < 935) && (Y > 800) && (U < (-285)) && (U > (-305)) && (V < 70 ) && (V > 60) )
 		{
-			LCD_ClearAndPrint("Valeur de la carte: 4");
+			//LCD_ClearAndPrint("Valeur de la carte: 4");
 			cCarte = 4;
 		}
+
 	//5
-	if((Y < 775) && (Y > 650) && (U < 22) && (U > 5) && (V < 26) && (V > 10) )
+	if((Y < 799) && (Y > 600) && (U < 45) && (U > 0) && (V < 40) && (V > 0) )
 		{
-			LCD_ClearAndPrint("Valeur de la carte: 5");
+			//LCD_ClearAndPrint("Valeur de la carte: 5");
 			cCarte = 5;
 		}
+
+	//6
+	if((Y < 595) && (Y > 400) && (U < (-145)) && (U > (-190)) && (V < 405) && (V > 335) )
+	{
+			//LCD_ClearAndPrint("Valeur de la carte: 6");
+			cCarte = 6;
+	}
+
+	//8
+	if((Y < 300) && (Y > 170) && (U < (-15)) && (U > (-25)) && (V < (-50)) && (V > (-100) ))
+		{
+			//LCD_ClearAndPrint("Valeur de la carte: 8");
+			cCarte = 8;
+			//LCD_ClearAndPrint("Valeur de la carte: %d", cCarte);
+		}
+
+	//9
+	if((Y < 218) && (Y > 155) && (U < (-35)) && (U > (-52)) && (V < 90) && (V > 60) )
+	{
+		//LCD_ClearAndPrint("Valeur de la carte: 9");
+		cCarte = 9;
+	}
+
+	//10
+	if((Y < 140) && (Y > 70) && (U < -10) && (U > -22) && (V < 40) && (V > 5) )
+	{
+
+		//LCD_ClearAndPrint("Valeur de la carte: 10");
+		cCarte = 10;
+	}
+
 
 	return cCarte;
 }
